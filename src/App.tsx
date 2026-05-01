@@ -266,6 +266,7 @@ function ScheduleGrid({ acts, day, nowMinutes, scrollRef }: {
 
 export default function App() {
   const [day, setDay] = useState<Day>(getDefaultDay);
+  const [showMap, setShowMap] = useState(false);
   const gridScrollRef = useRef<HTMLDivElement>(null);
   const dayTabsRef = useRef<HTMLElement>(null);
 
@@ -320,6 +321,7 @@ export default function App() {
           </div>
           <div className="header-info">
             <span className="header-day">{DAY_DATE_LABELS[day]}</span>
+            <button className="map-btn" onClick={() => setShowMap(true)}>MAP</button>
           </div>
         </div>
         <nav className="day-tabs" ref={dayTabsRef as React.RefObject<HTMLElement>}>
@@ -346,6 +348,18 @@ export default function App() {
           />
         </div>
       </div>
+
+      {showMap && (
+        <div className="map-overlay" onClick={() => setShowMap(false)}>
+          <button className="map-close" onClick={() => setShowMap(false)} aria-label="Close map">×</button>
+          <div className="map-scroll" onClick={e => e.stopPropagation()}>
+            <img src={`${import.meta.env.BASE_URL}venue-map.jpg`} alt="EDC Las Vegas venue map" className="venue-map-img" />
+            <div className="map-caption">
+              EDC Las Vegas '25 recharge map · 2026 layout TBA
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
