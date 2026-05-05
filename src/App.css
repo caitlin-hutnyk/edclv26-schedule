@@ -358,8 +358,8 @@ body {
   transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   background: rgba(20, 10, 40, 0.6);
   backdrop-filter: blur(4px);
-  border: 1px solid rgba(var(--acc), 0.55);
-  box-shadow: 0 0 0 1px rgba(var(--acc), 0.15) inset, 0 2px 12px rgba(var(--acc), 0.08);
+  border: 1.5px solid rgba(var(--acc), 0.85);
+  box-shadow: 0 0 0 1px rgba(var(--acc), 0.2) inset, 0 2px 14px rgba(var(--acc), 0.18);
   z-index: 1;
 }
 
@@ -412,9 +412,13 @@ body {
 }
 .act-block.tier-unpicked:hover .act-name { color: var(--tint); }
 
-/* Could-see: visible, neon outline (the default look) */
+/* Could-see: bright neon outline + subtle stage tint */
 .act-block.tier-could {
-  /* uses default styling */
+  background: linear-gradient(135deg, rgba(var(--acc), 0.1) 0%, rgba(var(--acc), 0.03) 100%);
+}
+.act-block.tier-could .act-name {
+  color: var(--tint);
+  font-weight: 600;
 }
 
 /* Want-to-see: brighter, subtle stage-colored fill */
