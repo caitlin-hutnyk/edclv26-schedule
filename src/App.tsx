@@ -143,10 +143,11 @@ function ActBlock({ act, rangeStart, hourPx }: {
 }) {
   const top = ((act.start - rangeStart) / 60) * hourPx;
   const height = Math.max(((act.end - act.start) / 60) * hourPx - 2, hourPx < 50 ? 10 : 20);
+  const tierClass = act.tier ? `tier-${act.tier}` : 'tier-unpicked';
 
   return (
     <div
-      className={`act-block stage-${act.stage}`}
+      className={`act-block stage-${act.stage} ${tierClass}`}
       style={{ top: `${top}px`, height: `${height}px` }}
       id={`grid-${act.id}`}
     >
