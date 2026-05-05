@@ -390,22 +390,27 @@ body {
    PICK TIERS — visual hierarchy
    ════════════════════════════════════ */
 
-/* Unpicked (not picked at all): faded, dashed, recedes into background */
+/* Unpicked (not picked at all): muted, dashed, recedes — but still readable */
 .act-block.tier-unpicked {
-  opacity: 0.28;
-  background: rgba(20, 10, 40, 0.3);
+  background: rgba(20, 10, 40, 0.45);
   border-style: dashed;
-  border-color: rgba(var(--acc), 0.3);
+  border-color: rgba(var(--acc), 0.35);
   box-shadow: none;
 }
 .act-block.tier-unpicked .act-name {
-  color: rgba(240, 232, 255, 0.5);
+  color: rgba(240, 232, 255, 0.78);
   font-weight: 500;
 }
-.act-block.tier-unpicked:hover {
-  opacity: 0.7;
-  border-style: solid;
+.act-block.tier-unpicked .act-time-label {
+  color: rgba(240, 232, 255, 0.45);
 }
+.act-block.tier-unpicked:hover {
+  border-style: solid;
+  border-color: rgba(var(--acc), 0.6);
+  background: rgba(20, 10, 40, 0.7);
+  box-shadow: 0 0 0 1px rgba(var(--acc), 0.15) inset, 0 2px 12px rgba(var(--acc), 0.1);
+}
+.act-block.tier-unpicked:hover .act-name { color: var(--tint); }
 
 /* Could-see: visible, neon outline (the default look) */
 .act-block.tier-could {
