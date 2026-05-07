@@ -354,9 +354,9 @@ export default function App() {
         <div className="map-overlay" onClick={() => setShowMap(false)}>
           <button className="map-close" onClick={() => setShowMap(false)} aria-label="Close map">×</button>
           <div className="map-scroll" onClick={e => e.stopPropagation()}>
-            <img src={`${import.meta.env.BASE_URL}venue-map.jpg`} alt="EDC Las Vegas venue map" className="venue-map-img" />
+            <img src={`${import.meta.env.BASE_URL}venue-map.png`} alt="EDC Las Vegas 2026 festival map" className="venue-map-img" />
             <div className="map-caption">
-              EDC Las Vegas '25 recharge map · 2026 layout TBA
+              EDC Las Vegas 2026 · official festival map
             </div>
           </div>
         </div>
