@@ -1,7 +1,9 @@
 import { useState, useCallback, useRef, useEffect, useLayoutEffect } from 'react';
 import { allData, STAGES, STAGE_LABELS } from './data';
-import type { Day, Act } from './data';
+import type { Day, Act, ItineraryBlock, ItineraryOption } from './data';
 import './App.css';
+
+type MobileView = 'plan' | 'lineup' | 'map';
 
 function formatTime(mins: number): string {
   let h = Math.floor(mins / 60);
@@ -265,9 +267,96 @@ function ScheduleGrid({ acts, day, nowMinutes, scrollRef }: {
   );
 }
 
+// Map stage label abbreviations to full Stage keys for color theming
+function stageKeyFromLabel(label?: string): string | null {
+  if (!label) return null;
+  const lower = label.toLowerCase();
+  if (lower.includes('kf') || lower.includes('kinetic')) return 'kinetic';
+  if (lower.includes('cg') || lower.includes('circuit')) return 'circuit';
+  if (lower.includes('cm') || lower.includes('cosmic')) return 'cosmic';
+  if (lower.includes('bp') || lower.includes('bass')) return 'bass';
+  if (lower.includes('ng') || lower.includes('neon')) return 'neon';
+  if (lower.includes('qv') || lower.includes('quantum')) return 'quantum';
+  if (lower.includes('sb') || lower.includes('stereo')) return 'stereo';
+  if (lower.includes('wl') || lower.includes('waste')) return 'waste';
+  if (lower.includes('bj') || lower.includes('bionic')) return 'bionic';
+  return null;
+}
+
+function ItineraryItem({ block, acts }: {
+  block: ItineraryBlock;
+  acts: Act[];
+}) {
+  const linkedAct = block.actId ? acts.find(a => a.id === block.actId) : undefined;
+  const stageKey = linkedAct ? linkedAct.stage : stageKeyFromLabel(block.stage);
+  const stageClass = stageKey ? `stage-${stageKey}` : '';
+  const tierClass = linkedAct?.tier ? `tier-${linkedAct.tier}` : '';
+
+  if (block.type === 'subheader') {
+    return (
+      <div className="itinerary-subheader">
+        <span>{block.title}</span>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`itinerary-item it-${block.type} ${stageClass} ${tierClass}`}
+      data-it-time={block.start}
+    >
+      <div className="it-time-col">
+        <div className="it-time">{formatTime(block.start)}</div>
+        {block.type === 'act' && (
+          <div className="it-time-end">–{formatTime(block.end)}</div>
+        )}
+      </div>
+      <div className="it-content">
+        <div className="it-connector">
+          <div className={`it-dot it-dot-${block.type}`} />
+          <div className="it-line" />
+        </div>
+        <div className={`it-card it-card-${block.type}`}>
+          <div className="it-card-header">
+            <span className="it-title">{block.title}</span>
+            {block.stage && block.type === 'act' && (
+              <span className="it-stage">{block.stage}</span>
+            )}
+          </div>
+          {block.subtitle && <div className="it-subtitle">{block.subtitle}</div>}
+          {block.note && <div className="it-note">{block.note}</div>}
+          {block.options && block.options.length > 0 && (
+            <div className="it-options">
+              {block.options.map((opt: ItineraryOption) => {
+                const optStageKey = stageKeyFromLabel(opt.stage);
+                const optActFull = acts.find(a => a.id === opt.actId);
+                const optTier = optActFull?.tier;
+                return (
+                  <div
+                    key={opt.actId}
+                    className={`it-option ${optStageKey ? `stage-${optStageKey}` : ''} ${optTier ? `tier-${optTier}` : ''}`}
+                    data-it-time={optActFull?.start}
+                  >
+                    <div className="it-option-main">
+                      <span className="it-option-name">{opt.name}</span>
+                      <span className="it-option-meta">{opt.stage} · {opt.time}</span>
+                    </div>
+                    {opt.note && <div className="it-option-note">{opt.note}</div>}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [day, setDay] = useState<Day>(getDefaultDay);
   const [showMap, setShowMap] = useState(false);
+  const [mobileView, setMobileView] = useState<MobileView>('plan');
   const gridScrollRef = useRef<HTMLDivElement>(null);
   const dayTabsRef = useRef<HTMLElement>(null);
 
@@ -293,7 +382,7 @@ export default function App() {
     }
   }, [day]);
 
-  const { acts } = allData[day];
+  const { acts, itinerary } = allData[day];
 
   const [nowMinutes, setNowMinutes] = useState<number | null>(() => {
     const { dateStr, minutes } = getPacificTime();
@@ -320,9 +409,25 @@ export default function App() {
             <span className="brand-lv">LAS VEGAS</span>
             <span className="brand-year">'26</span>
           </div>
-          <div className="header-info">
+          <div className="header-info desktop-only">
             <span className="header-day">{DAY_DATE_LABELS[day]}</span>
             <button className="map-btn" onClick={() => setShowMap(true)}>MAP</button>
+          </div>
+          <div className="header-info mobile-only">
+            <nav className="mobile-view-tabs">
+              {(['plan', 'lineup', 'map'] as MobileView[]).map(v => (
+                <button
+                  key={v}
+                  className={`view-tab ${mobileView === v ? 'active' : ''}`}
+                  onClick={() => {
+                    if (v === 'map') setShowMap(true);
+                    else setMobileView(v);
+                  }}
+                >
+                  {v === 'plan' ? 'PLAN' : v === 'lineup' ? 'LINEUP' : 'MAP'}
+                </button>
+              ))}
+            </nav>
           </div>
         </div>
         <nav className="day-tabs" ref={dayTabsRef as React.RefObject<HTMLElement>}>
@@ -340,13 +445,22 @@ export default function App() {
       </header>
 
       <div className="main-content">
-        <div className="grid-panel" {...gridSwipe}>
+        <div className={`grid-panel ${mobileView === 'lineup' ? 'mobile-active' : ''}`} {...gridSwipe}>
           <ScheduleGrid
             acts={acts}
             day={day}
             nowMinutes={nowMinutes}
             scrollRef={gridScrollRef}
           />
+        </div>
+        <div className="divider" />
+        <div className={`plan-panel ${mobileView === 'plan' ? 'mobile-active' : ''}`}>
+          <div className="plan-panel-header">THE PLAN</div>
+          <div className="plan-scroll">
+            {itinerary.map((block, i) => (
+              <ItineraryItem key={i} block={block} acts={acts} />
+            ))}
+          </div>
         </div>
       </div>
 
