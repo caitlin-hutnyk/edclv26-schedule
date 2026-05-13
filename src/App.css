@@ -53,7 +53,10 @@
   --day-bg-2: #0a041f;
 }
 
-html, body, #root { height: 100%; overflow: hidden; }
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
 
 body {
   font-family: 'Space Grotesk', -apple-system, sans-serif;
@@ -64,7 +67,8 @@ body {
 }
 
 .app {
-  height: 100vh;
+  height: 100vh;        /* fallback */
+  height: 100dvh;       /* iOS Safari: adjusts to the visible area */
   display: flex;
   flex-direction: column;
   position: relative;
@@ -962,6 +966,7 @@ body {
   .grid-scroll {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
   }
 
   .grid-time-spacer { width: 30px; }
