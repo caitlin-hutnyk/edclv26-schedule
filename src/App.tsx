@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect, useLayoutEffect } from 'react';
 import { allData, STAGES, STAGE_LABELS } from './data';
 import type { Day, Act, ItineraryBlock, ItineraryOption } from './data';
+import { Select } from './components/Select';
 import './App.css';
 
 type MobileView = 'plan' | 'lineup' | 'map';
@@ -414,20 +415,15 @@ export default function App() {
             <button className="map-btn" onClick={() => setShowMap(true)}>MAP</button>
           </div>
           <div className="header-info mobile-only">
-            <nav className="mobile-view-tabs">
-              {(['plan', 'lineup', 'map'] as MobileView[]).map(v => (
-                <button
-                  key={v}
-                  className={`view-tab ${mobileView === v ? 'active' : ''}`}
-                  onClick={() => {
-                    if (v === 'map') setShowMap(true);
-                    else setMobileView(v);
-                  }}
-                >
-                  {v === 'plan' ? 'PLAN' : v === 'lineup' ? 'LINEUP' : 'MAP'}
-                </button>
-              ))}
-            </nav>
+            <Select
+              value={mobileView}
+              onValueChange={v => setMobileView(v as MobileView)}
+              options={[
+                { value: 'plan', label: 'Plan' },
+                { value: 'lineup', label: 'Lineup' },
+                { value: 'map', label: 'Map' },
+              ]}
+            />
           </div>
         </div>
         <nav className="day-tabs" ref={dayTabsRef as React.RefObject<HTMLElement>}>
@@ -462,12 +458,19 @@ export default function App() {
             ))}
           </div>
         </div>
+        {/* Mobile: map as a 3rd inline view */}
+        <div className={`map-panel ${mobileView === 'map' ? 'mobile-active' : ''}`}>
+          <div className="map-panel-scroll">
+            <img src={`${import.meta.env.BASE_URL}venue-map.png`} alt="EDC Las Vegas 2026 festival map" className="venue-map-img" />
+          </div>
+        </div>
       </div>
 
+      {/* Desktop: map as a modal overlay */}
       {showMap && (
         <div className="map-overlay" onClick={() => setShowMap(false)}>
           <button className="map-close" onClick={() => setShowMap(false)} aria-label="Close map">×</button>
-          <div className="map-scroll" onClick={e => e.stopPropagation()}>
+          <div className="map-modal" onClick={e => e.stopPropagation()}>
             <img src={`${import.meta.env.BASE_URL}venue-map.png`} alt="EDC Las Vegas 2026 festival map" className="venue-map-img" />
             <div className="map-caption">
               EDC Las Vegas 2026 · official festival map

@@ -176,37 +176,83 @@ body {
 }
 .map-btn:active { transform: scale(0.97); }
 
-/* Mobile view switcher (Plan / Lineup / Map) */
+/* Mobile/desktop visibility helpers */
 .mobile-only { display: none; }
 .desktop-only { display: flex; }
 
-.mobile-view-tabs {
-  display: flex;
-  gap: 2px;
-  background: rgba(20, 10, 40, 0.5);
+/* View select dropdown (mobile) */
+.view-select-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  background: rgba(20, 10, 40, 0.7);
+  border: 1px solid rgba(168, 85, 255, 0.4);
   border-radius: 8px;
-  padding: 3px;
-  border: 1px solid rgba(168, 85, 255, 0.18);
-}
-
-.view-tab {
-  padding: 6px 12px;
-  border: none;
-  background: transparent;
   font-family: 'Bai Jamjuree', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: var(--text-muted);
-  border-radius: 5px;
+  color: var(--text);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  outline: none;
   transition: all 0.15s ease;
+  min-width: 96px;
+  justify-content: space-between;
 }
-.view-tab.active {
-  background: rgba(168, 85, 255, 0.22);
+.view-select-trigger:hover,
+.view-select-trigger[data-state="open"] {
+  border-color: var(--edc-violet);
+  box-shadow: 0 0 12px rgba(168, 85, 255, 0.25);
+}
+.view-select-trigger[data-state="open"] svg {
+  transform: rotate(180deg);
+}
+.view-select-trigger svg {
+  color: var(--day-accent);
+  transition: transform 0.18s ease;
+}
+
+.view-select-content {
+  background: rgba(20, 10, 40, 0.96);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(168, 85, 255, 0.35);
+  border-radius: 10px;
+  padding: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 24px rgba(168, 85, 255, 0.15);
+  min-width: var(--radix-select-trigger-width);
+  z-index: 999;
+  animation: dropdown-in 0.16s ease;
+}
+@keyframes dropdown-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view-select-item {
+  display: flex;
+  align-items: center;
+  padding: 9px 14px;
+  border-radius: 6px;
+  font-family: 'Bai Jamjuree', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.view-select-item[data-highlighted]:not([data-state="checked"]) {
+  background: rgba(168, 85, 255, 0.12);
   color: var(--text);
-  box-shadow: 0 0 10px rgba(168, 85, 255, 0.18) inset;
+}
+.view-select-item[data-state="checked"] {
+  background: linear-gradient(135deg, rgba(168, 85, 255, 0.25) 0%, rgba(0, 212, 255, 0.12) 100%);
+  color: var(--day-accent);
+  font-weight: 700;
 }
 
 .day-tabs {
@@ -803,17 +849,17 @@ body {
 
 .grid-mobile-header { display: none; }
 
-/* ──── Map overlay ──── */
+/* ──── Map: desktop modal ──── */
 .map-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(2, 1, 8, 0.92);
-  backdrop-filter: blur(8px);
+  background: rgba(2, 1, 8, 0.88);
+  backdrop-filter: blur(10px);
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 32px;
   animation: map-fade-in 0.2s ease;
 }
 
@@ -824,12 +870,12 @@ body {
 
 .map-close {
   position: absolute;
-  top: 14px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
+  top: 18px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
   border: 1px solid rgba(168, 85, 255, 0.4);
-  background: rgba(20, 10, 40, 0.85);
+  background: rgba(20, 10, 40, 0.9);
   color: var(--text);
   font-size: 22px;
   font-weight: 300;
@@ -849,14 +895,14 @@ body {
   box-shadow: 0 0 14px rgba(255, 46, 154, 0.4);
 }
 
-.map-scroll {
-  max-width: 100%;
-  max-height: 100%;
+.map-modal {
+  max-width: min(90vw, 900px);
+  max-height: 90vh;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  border-radius: 14px;
-  border: 1px solid rgba(168, 85, 255, 0.25);
-  box-shadow: 0 0 60px rgba(168, 85, 255, 0.15), 0 0 0 1px rgba(255, 46, 154, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(168, 85, 255, 0.3);
+  box-shadow: 0 0 80px rgba(168, 85, 255, 0.2), 0 0 0 1px rgba(255, 46, 154, 0.1);
   background: #06030f;
   display: flex;
   flex-direction: column;
@@ -871,29 +917,38 @@ body {
 }
 
 .map-caption {
-  padding: 10px 14px;
+  padding: 12px 16px;
   text-align: center;
   font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
+  font-weight: 600;
+  letter-spacing: 2px;
   color: var(--text-dim);
   text-transform: uppercase;
   border-top: 1px solid rgba(168, 85, 255, 0.12);
+  background: rgba(20, 10, 40, 0.5);
 }
 
-@media (max-width: 767px) {
-  .map-overlay { padding: 0; }
-  .map-scroll {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 0;
-    border: none;
-  }
-  .venue-map-img { width: 100%; }
-  .map-close { top: max(14px, env(safe-area-inset-top, 14px)); right: 14px; }
-  .map-btn { padding: 5px 11px; font-size: 10px; letter-spacing: 1.8px; }
+/* ──── Map: mobile inline view ──── */
+.map-panel {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  background: var(--bg);
+}
+.map-panel-scroll {
+  flex: 1;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 12px 12px calc(40px + env(safe-area-inset-bottom, 0px));
+  display: flex;
+  justify-content: center;
+}
+.map-panel-scroll .venue-map-img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(168, 85, 255, 0.18);
+  box-shadow: 0 0 24px rgba(168, 85, 255, 0.12);
 }
 
 /* ════════════════════════════════════
@@ -914,14 +969,15 @@ body {
   /* Mobile layout: stack with view switcher */
   .main-content { flex-direction: column; }
   .divider { display: none; }
-  .plan-panel, .grid-panel {
+  .plan-panel, .grid-panel, .map-panel {
     width: 100%;
     flex: 1;
     display: none;
     min-height: 0;
   }
   .plan-panel.mobile-active,
-  .grid-panel.mobile-active {
+  .grid-panel.mobile-active,
+  .map-panel.mobile-active {
     display: flex;
     flex-direction: column;
   }
