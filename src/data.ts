@@ -46,7 +46,7 @@ export interface Act {
   tier?: Tier;
 }
 
-export type BlockType = 'act' | 'meander' | 'walk' | 'flex' | 'subheader';
+export type BlockType = 'act' | 'meander' | 'walk' | 'flex' | 'subheader' | 'meetup';
 
 export interface ItineraryOption {
   actId: string;
@@ -394,11 +394,23 @@ export const day3Acts: Act[] = [
 
 export const day1Itinerary: ItineraryBlock[] = [
   {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(21, 30),
+    end: t(21, 35),
+  },
+  {
     type: 'meander',
     title: 'Arrive + drift',
     subtitle: 'Eat, explore, find the group',
     start: t(22, 30),
     end: t(23, 15),
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(22, 45),
+    end: t(22, 50),
   },
   {
     type: 'act',
@@ -424,6 +436,12 @@ export const day1Itinerary: ItineraryBlock[] = [
     start: t(24, 40),
     end: t(26, 30),
     note: 'Full 2hr set — miss first ~10 min walking',
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(26, 0),
+    end: t(26, 5),
   },
   {
     type: 'walk',
@@ -472,6 +490,12 @@ export const day2Itinerary: ItineraryBlock[] = [
       { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9-10 PM' },
       { actId: 'd2-bp-hybrid-minds', name: 'Hybrid Minds', stage: 'BP', time: '9:30-10:30 PM' },
     ],
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(22, 30),
+    end: t(22, 35),
   },
   {
     type: 'walk',
@@ -523,6 +547,19 @@ export const day2Itinerary: ItineraryBlock[] = [
       { actId: 'd2-kf-above-beyond', name: 'Above & Beyond', stage: 'KF', time: '4:14-5:29 AM' },
     ],
   },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    subtitle: 'To find lost people',
+    start: t(25, 0),
+    end: t(25, 5),
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(27, 30),
+    end: t(27, 35),
+  },
 ];
 
 export const day3Itinerary: ItineraryBlock[] = [
@@ -532,6 +569,12 @@ export const day3Itinerary: ItineraryBlock[] = [
     subtitle: 'Quiet before AMC',
     start: t(20, 0),
     end: t(22, 30),
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(22, 30),
+    end: t(22, 35),
   },
   {
     type: 'act',
@@ -570,6 +613,19 @@ export const day3Itinerary: ItineraryBlock[] = [
       { actId: 'd3-kf-armin', name: 'Armin van Buuren', stage: 'KF', time: '4:14-5:29 AM' },
       { actId: 'd3-bp-aeon-mode', name: 'AEON:MODE', stage: 'BP', time: '4:30-5:30 AM', note: '~15 min walk from KF · mutually exclusive with full Armin' },
     ],
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    subtitle: 'To find lost people',
+    start: t(25, 0),
+    end: t(25, 5),
+  },
+  {
+    type: 'meetup',
+    title: 'Glitched Bus',
+    start: t(27, 30),
+    end: t(27, 35),
   },
 ];
 

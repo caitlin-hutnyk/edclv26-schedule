@@ -172,11 +172,12 @@ function useIsMobile() {
   return isMobile;
 }
 
-function ScheduleGrid({ acts, day, nowMinutes, scrollRef }: {
+function ScheduleGrid({ acts, day, nowMinutes, scrollRef, meetups }: {
   acts: Act[];
   day: Day;
   nowMinutes: number | null;
   scrollRef: React.RefObject<HTMLDivElement | null>;
+  meetups: ItineraryBlock[];
 }) {
   const isMobile = useIsMobile();
   const hourPx = isMobile ? 40 : HOUR_PX;
@@ -235,6 +236,22 @@ function ScheduleGrid({ acts, day, nowMinutes, scrollRef }: {
               className="hour-line"
               style={{ top: `${((h * 60 - rangeStart) / 60) * hourPx}px` }}
             />
+          ))}
+
+          {meetups.map((m, i) => (
+            <div
+              key={`meetup-${i}`}
+              className="meetup-line"
+              style={{ top: `${((m.start - rangeStart) / 60) * hourPx}px` }}
+              title={`${formatTime(m.start)} · ${m.title}${m.subtitle ? ` · ${m.subtitle}` : ''}`}
+            >
+              <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="meetup-icon">
+                <circle cx="6" cy="6" r="2.5" />
+                <circle cx="11" cy="7" r="2" />
+                <path d="M2 14c0-2 2-3.5 4-3.5s4 1.5 4 3.5" />
+                <path d="M9.5 14c0-1.5 1.5-2.5 3-2.5s2.5 1 2.5 2.5" />
+              </svg>
+            </div>
           ))}
 
           {nowMinutes !== null && nowMinutes >= rangeStart && nowMinutes <= rangeEnd && (
@@ -297,6 +314,24 @@ function ItineraryItem({ block, acts }: {
     return (
       <div className="itinerary-subheader">
         <span>{block.title}</span>
+      </div>
+    );
+  }
+
+  if (block.type === 'meetup') {
+    return (
+      <div className="itinerary-meetup" data-it-time={block.start}>
+        <div className="it-meetup-time">{formatTime(block.start)}</div>
+        <div className="it-meetup-pill">
+          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="6" cy="6" r="2.5" />
+            <circle cx="11" cy="7" r="2" />
+            <path d="M2 14c0-2 2-3.5 4-3.5s4 1.5 4 3.5" />
+            <path d="M9.5 14c0-1.5 1.5-2.5 3-2.5s2.5 1 2.5 2.5" />
+          </svg>
+          <span className="it-meetup-label">{block.title}</span>
+          {block.subtitle && <span className="it-meetup-note">· {block.subtitle.toLowerCase()}</span>}
+        </div>
       </div>
     );
   }
@@ -384,6 +419,7 @@ export default function App() {
   }, [day]);
 
   const { acts, itinerary } = allData[day];
+  const meetups = itinerary.filter(b => b.type === 'meetup');
 
   const [nowMinutes, setNowMinutes] = useState<number | null>(() => {
     const { dateStr, minutes } = getPacificTime();
@@ -447,6 +483,7 @@ export default function App() {
             day={day}
             nowMinutes={nowMinutes}
             scrollRef={gridScrollRef}
+            meetups={meetups}
           />
         </div>
         <div className="divider" />

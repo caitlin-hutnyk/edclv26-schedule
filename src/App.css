@@ -570,6 +570,75 @@ body {
   text-transform: uppercase;
 }
 
+/* ── Meetup row (compact pill, FYI styling) ── */
+.itinerary-meetup {
+  display: flex;
+  align-items: center;
+  padding: 2px 14px 2px 14px;
+  gap: 12px;
+}
+.it-meetup-time {
+  width: 64px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--edc-cyan);
+  letter-spacing: 0.3px;
+  font-variant-numeric: tabular-nums;
+}
+.it-meetup-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  margin-left: 32px;
+  border-radius: 999px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px dashed rgba(0, 212, 255, 0.45);
+  color: var(--edc-cyan);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.it-meetup-label {
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+.it-meetup-note {
+  font-size: 9.5px;
+  color: rgba(0, 212, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* ── Meetup line on Lineup grid (horizontal dashed) ── */
+.meetup-line {
+  position: absolute;
+  left: -64px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 6;
+}
+.meetup-line::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed rgba(0, 212, 255, 0.55);
+  opacity: 0.85;
+}
+.meetup-line .meetup-icon {
+  color: var(--edc-cyan);
+  flex-shrink: 0;
+  margin-right: 4px;
+  filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.6));
+}
+
 .grid-panel {
   flex: 1;
   min-width: 0;
@@ -1041,4 +1110,12 @@ body {
   .act-block .act-name { font-size: 6px; line-height: 1.1; font-weight: 600; }
   .act-block .act-time-label { display: none; }
   .grid-body .now-indicator { left: -24px; }
+  .grid-body .meetup-line { left: -24px; }
+
+  /* Meetup pill on Plan view: more compact on mobile */
+  .itinerary-meetup { padding: 1px 10px; gap: 8px; }
+  .it-meetup-time { width: 50px; padding-right: 6px; font-size: 9px; }
+  .it-meetup-pill { margin-left: 22px; padding: 3px 8px 3px 7px; gap: 5px; }
+  .it-meetup-label { font-size: 9px; letter-spacing: 1px; }
+  .it-meetup-note { font-size: 9px; }
 }
