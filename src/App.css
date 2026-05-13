@@ -1018,11 +1018,10 @@ body {
     white-space: nowrap;
   }
 
-  /* No internal scroll at default zoom — whole grid fits; pinch-zoom for detail */
+  /* No in-page scroll at all on mobile — whole grid fits; pinch-zoom for detail */
   .schedule-grid { overflow: hidden; }
   .grid-scroll {
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 
   .grid-time-spacer { width: 24px; }

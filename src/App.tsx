@@ -182,7 +182,7 @@ function ScheduleGrid({ acts, day, nowMinutes, scrollRef }: {
   const hourPx = isMobile ? 40 : HOUR_PX;
   const [rangeStart, rangeEnd] = DAY_RANGES[day];
   const totalHours = (rangeEnd - rangeStart) / 60;
-  const gridHeight = totalHours * hourPx + (isMobile ? 60 : 120);
+  const gridHeight = totalHours * hourPx + (isMobile ? 20 : 120);
 
   const hours: number[] = [];
   for (let h = Math.ceil(rangeStart / 60); h <= Math.floor(rangeEnd / 60); h++) {
