@@ -179,7 +179,7 @@ function ScheduleGrid({ acts, day, nowMinutes, scrollRef }: {
   scrollRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const isMobile = useIsMobile();
-  const hourPx = isMobile ? 44 : HOUR_PX;
+  const hourPx = isMobile ? 40 : HOUR_PX;
   const [rangeStart, rangeEnd] = DAY_RANGES[day];
   const totalHours = (rangeEnd - rangeStart) / 60;
   const gridHeight = totalHours * hourPx + (isMobile ? 60 : 120);

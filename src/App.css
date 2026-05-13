@@ -1005,12 +1005,12 @@ body {
     z-index: 6;
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
-  .grid-mobile-header .grid-time-spacer { width: 30px; flex-shrink: 0; }
+  .grid-mobile-header .grid-time-spacer { width: 24px; flex-shrink: 0; }
   .grid-mobile-header .grid-header-stage {
     flex: 1;
-    font-size: 7px;
-    padding: 6px 1px;
-    letter-spacing: 0.2px;
+    font-size: 6px;
+    padding: 4px 1px;
+    letter-spacing: 0;
     text-align: center;
     font-weight: 700;
     overflow: hidden;
@@ -1018,28 +1018,28 @@ body {
     white-space: nowrap;
   }
 
+  /* No internal scroll at default zoom — whole grid fits; pinch-zoom for detail */
   .schedule-grid { overflow: hidden; }
   .grid-scroll {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px));
   }
 
-  .grid-time-spacer { width: 30px; }
-  .grid-body { margin-left: 30px; }
-  .time-axis { left: -30px; width: 30px; }
-  .time-marker { padding-right: 4px; }
-  .time-marker span { font-size: 8px; }
+  .grid-time-spacer { width: 24px; }
+  .grid-body { margin-left: 24px; }
+  .time-axis { left: -24px; width: 24px; }
+  .time-marker { padding-right: 2px; }
+  .time-marker span { font-size: 6px; }
 
   .stage-column { flex: 1; }
 
   .act-block {
     left: 1px;
     right: 1px;
-    padding: 2px 3px;
-    border-radius: 3px;
+    padding: 1px 2px;
+    border-radius: 2px;
   }
-  .act-block .act-name { font-size: 7px; line-height: 1.15; font-weight: 600; }
+  .act-block .act-name { font-size: 6px; line-height: 1.1; font-weight: 600; }
   .act-block .act-time-label { display: none; }
-  .grid-body .now-indicator { left: -30px; }
+  .grid-body .now-indicator { left: -24px; }
 }
