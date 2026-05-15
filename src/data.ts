@@ -396,7 +396,6 @@ export const day1Itinerary: ItineraryBlock[] = [
   {
     type: 'meander',
     title: 'Arrive early + explore',
-    subtitle: 'Eat, drift, take it all in — no rush',
     start: t(20, 0),
     end: t(23, 0),
   },
@@ -420,12 +419,10 @@ export const day1Itinerary: ItineraryBlock[] = [
     stage: 'circuitGROUNDS',
     start: t(23, 15),
     end: t(24, 25),
-    note: 'With the group',
   },
   {
     type: 'flex',
-    title: 'Stay for Wooli or catch Salute',
-    subtitle: 'Leaning Salute — but Wooli is right there if the energy is good',
+    title: 'Wooli or Salute',
     start: t(24, 25),
     end: t(25, 47),
     options: [
@@ -436,7 +433,6 @@ export const day1Itinerary: ItineraryBlock[] = [
   {
     type: 'flex',
     title: 'Notion or Fisher',
-    subtitle: 'Both at 1:47 AM — pick a vibe',
     start: t(25, 47),
     end: t(26, 57),
     options: [
@@ -447,7 +443,6 @@ export const day1Itinerary: ItineraryBlock[] = [
   {
     type: 'flex',
     title: 'MPH, Porter Robinson, or Culture Shock',
-    subtitle: 'Follow the energy — all solid',
     start: t(26, 47),
     end: t(28, 30),
     options: [
@@ -458,8 +453,7 @@ export const day1Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'flex',
-    title: 'Charlotte or wrap up',
-    subtitle: "Probably head home — Charlotte is there if you're still going",
+    title: 'Charlotte or head home',
     start: t(28, 14),
     end: t(29, 29),
     options: [
@@ -471,21 +465,19 @@ export const day1Itinerary: ItineraryBlock[] = [
 export const day2Itinerary: ItineraryBlock[] = [
   {
     type: 'meander',
-    title: 'Arrive + drift',
-    subtitle: 'Find friends, settle in',
+    title: 'Arrive + settle in',
     start: t(20, 0),
     end: t(21, 0),
   },
   {
     type: 'flex',
-    title: 'Sub Focus or Hybrid Minds (or both, partial)',
-    subtitle: 'Leaning Hybrid Minds — they overlap 9:30-10 PM',
-    note: 'Sub Focus = KF, ~15 min from BP. Hybrid Minds = BP.',
+    title: 'Sub Focus or Hybrid Minds',
+    subtitle: 'Overlap 9:30–10 PM — Sub Focus at KF, Hybrid Minds at BP',
     start: t(21, 0),
     end: t(22, 30),
     options: [
-      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9-10 PM' },
-      { actId: 'd2-bp-hybrid-minds', name: 'Hybrid Minds', stage: 'BP', time: '9:30-10:30 PM' },
+      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM' },
+      { actId: 'd2-bp-hybrid-minds', name: 'Hybrid Minds', stage: 'BP', time: '9:30–10:30 PM' },
     ],
   },
   {
@@ -507,7 +499,6 @@ export const day2Itinerary: ItineraryBlock[] = [
     stage: 'circuitGROUNDS',
     start: t(22, 45),
     end: t(24, 15),
-    note: 'Leaning full set (90 min)',
   },
   {
     type: 'walk',
@@ -533,15 +524,14 @@ export const day2Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'flex',
-    title: 'KF anchor with friends',
-    subtitle: 'Stay as long as the energy holds — Kaskade + A&B are wants',
+    title: 'KF anchor',
     start: t(24, 45),
     end: t(29, 30),
     options: [
       { actId: 'd2-kf-john-summit', name: 'John Summit (tail)', stage: 'KF', time: 'ends 1:42 AM' },
-      { actId: 'd2-kf-subtronics', name: 'Subtronics', stage: 'KF', time: '1:47-2:57 AM' },
-      { actId: 'd2-kf-kaskade', name: 'Kaskade', stage: 'KF', time: '3:01-4:11 AM' },
-      { actId: 'd2-kf-above-beyond', name: 'Above & Beyond', stage: 'KF', time: '4:14-5:29 AM' },
+      { actId: 'd2-kf-subtronics', name: 'Subtronics', stage: 'KF', time: '1:47–2:57 AM' },
+      { actId: 'd2-kf-kaskade', name: 'Kaskade', stage: 'KF', time: '3:01–4:11 AM' },
+      { actId: 'd2-kf-above-beyond', name: 'Above & Beyond', stage: 'KF', time: '4:14–5:29 AM' },
     ],
   },
   {
@@ -563,7 +553,6 @@ export const day3Itinerary: ItineraryBlock[] = [
   {
     type: 'meander',
     title: 'Arrive + drift',
-    subtitle: 'Quiet before AMC',
     start: t(20, 0),
     end: t(22, 30),
   },
@@ -600,15 +589,14 @@ export const day3Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'flex',
-    title: 'Follow the group · open to close',
-    subtitle: 'Lots of options — pick whatever the energy calls for. Skip Cloonee.',
+    title: 'Open to close — skip Cloonee',
     start: t(24, 29),
     end: t(29, 30),
     options: [
-      { actId: 'd3-kf-zedd', name: 'Zedd', stage: 'KF', time: '12:32-1:42 AM' },
-      { actId: 'd3-kf-martin-garrix', name: 'Martin Garrix', stage: 'KF', time: '1:47-2:57 AM' },
-      { actId: 'd3-kf-armin', name: 'Armin van Buuren', stage: 'KF', time: '4:14-5:29 AM' },
-      { actId: 'd3-bp-aeon-mode', name: 'AEON:MODE', stage: 'BP', time: '4:30-5:30 AM', note: '~15 min walk from KF · mutually exclusive with full Armin' },
+      { actId: 'd3-kf-zedd', name: 'Zedd', stage: 'KF', time: '12:32–1:42 AM' },
+      { actId: 'd3-kf-martin-garrix', name: 'Martin Garrix', stage: 'KF', time: '1:47–2:57 AM' },
+      { actId: 'd3-kf-armin', name: 'Armin van Buuren', stage: 'KF', time: '4:14–5:29 AM' },
+      { actId: 'd3-bp-aeon-mode', name: 'AEON:MODE', stage: 'BP', time: '4:30–5:30 AM', note: '~15 min walk from KF · mutually exclusive with full Armin' },
     ],
   },
   {
