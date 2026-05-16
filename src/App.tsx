@@ -1,7 +1,6 @@
 import { useState, useCallback, useRef, useEffect, useLayoutEffect, Fragment } from 'react';
 import { allData, STAGES, STAGE_LABELS } from './data';
 import type { Day, Act, ItineraryBlock, ItineraryOption } from './data';
-import { Select } from './components/Select';
 import './App.css';
 
 type MobileView = 'plan' | 'lineup' | 'map';
@@ -389,6 +388,44 @@ function ItineraryItem({ block, acts }: {
   );
 }
 
+function ViewSwitcher({
+  value,
+  onValueChange,
+  options,
+}: {
+  value: string;
+  onValueChange: (v: string) => void;
+  options: { value: string; label: string }[];
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const pick = (clientX: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const { left, width } = el.getBoundingClientRect();
+    const idx = Math.max(0, Math.min(
+      Math.floor(((clientX - left) / width) * options.length),
+      options.length - 1,
+    ));
+    onValueChange(options[idx].value);
+  };
+
+  return (
+    <div
+      ref={ref}
+      className="view-switcher"
+      onPointerDown={e => { e.currentTarget.setPointerCapture(e.pointerId); pick(e.clientX); }}
+      onPointerMove={e => { if (e.currentTarget.hasPointerCapture(e.pointerId)) pick(e.clientX); }}
+    >
+      {options.map(opt => (
+        <div key={opt.value} className={`view-switcher-seg${opt.value === value ? ' active' : ''}`}>
+          {opt.label}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function PlanNowMarker() {
   return (
     <div className="plan-now-marker">
@@ -461,7 +498,7 @@ export default function App() {
             <button className="map-btn" onClick={() => setShowMap(true)}>MAP</button>
           </div>
           <div className="header-info mobile-only">
-            <Select
+            <ViewSwitcher
               value={mobileView}
               onValueChange={v => setMobileView(v as MobileView)}
               options={[
