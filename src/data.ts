@@ -401,13 +401,13 @@ export const day1Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     start: t(21, 30),
     end: t(21, 35),
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     subtitle: 'Before Levity',
     start: t(23, 5),
     end: t(23, 10),
@@ -482,7 +482,7 @@ export const day2Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     start: t(22, 30),
     end: t(22, 35),
   },
@@ -536,14 +536,14 @@ export const day2Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     subtitle: 'To find lost people',
     start: t(25, 0),
     end: t(25, 5),
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     start: t(27, 30),
     end: t(27, 35),
   },
@@ -558,7 +558,7 @@ export const day3Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     start: t(22, 30),
     end: t(22, 35),
   },
@@ -601,14 +601,14 @@ export const day3Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     subtitle: 'To find lost people',
     start: t(25, 0),
     end: t(25, 5),
   },
   {
     type: 'meetup',
-    title: 'Group meet @ Glitched Bus',
+    title: 'Group meet @ water fill · Gate S',
     start: t(27, 30),
     end: t(27, 35),
   },
