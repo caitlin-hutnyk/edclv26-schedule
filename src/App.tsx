@@ -407,9 +407,9 @@ function ItineraryItem({ block, acts, embeddedEvents = [] }: {
           {block.options && block.options.length > 0 && (
             <div className="it-options">
               {block.options.map((opt: ItineraryOption) => {
-                const optStageKey = stageKeyFromLabel(opt.stage);
+                const optStageKey = block.type !== 'meander' ? stageKeyFromLabel(opt.stage) : null;
                 const optActFull = acts.find(a => a.id === opt.actId);
-                const optTier = optActFull?.tier;
+                const optTier = block.type !== 'meander' ? optActFull?.tier : undefined;
                 return (
                   <div
                     key={opt.actId}
