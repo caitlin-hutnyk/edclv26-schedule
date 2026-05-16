@@ -301,9 +301,19 @@ function stageKeyFromLabel(label?: string): string | null {
   return null;
 }
 
-function ItineraryItem({ block, acts }: {
+const MeetupIcon = () => (
+  <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="6" cy="6" r="2.5" />
+    <circle cx="11" cy="7" r="2" />
+    <path d="M2 14c0-2 2-3.5 4-3.5s4 1.5 4 3.5" />
+    <path d="M9.5 14c0-1.5 1.5-2.5 3-2.5s2.5 1 2.5 2.5" />
+  </svg>
+);
+
+function ItineraryItem({ block, acts, embeddedMeetups = [] }: {
   block: ItineraryBlock;
   acts: Act[];
+  embeddedMeetups?: ItineraryBlock[];
 }) {
   const linkedAct = block.actId ? acts.find(a => a.id === block.actId) : undefined;
   const stageKey = linkedAct ? linkedAct.stage : stageKeyFromLabel(block.stage);
@@ -323,12 +333,7 @@ function ItineraryItem({ block, acts }: {
       <div className="itinerary-meetup" data-it-time={block.start}>
         <div className="it-meetup-time">{formatTime(block.start)}</div>
         <div className="it-meetup-pill">
-          <svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="6" cy="6" r="2.5" />
-            <circle cx="11" cy="7" r="2" />
-            <path d="M2 14c0-2 2-3.5 4-3.5s4 1.5 4 3.5" />
-            <path d="M9.5 14c0-1.5 1.5-2.5 3-2.5s2.5 1 2.5 2.5" />
-          </svg>
+          <MeetupIcon />
           <span className="it-meetup-label">{block.title}</span>
           {block.subtitle && <span className="it-meetup-note">· {block.subtitle.toLowerCase()}</span>}
         </div>
@@ -381,6 +386,18 @@ function ItineraryItem({ block, acts }: {
                   </div>
                 );
               })}
+            </div>
+          )}
+          {embeddedMeetups.length > 0 && (
+            <div className="it-embedded-meetups">
+              {embeddedMeetups.map((m, i) => (
+                <div key={i} className="it-embedded-meetup">
+                  <MeetupIcon />
+                  <span className="it-embedded-meetup-time">{formatTime(m.start)}</span>
+                  <span className="it-embedded-meetup-label">{m.title}</span>
+                  {m.subtitle && <span className="it-embedded-meetup-note">· {m.subtitle.toLowerCase()}</span>}
+                </div>
+              ))}
             </div>
           )}
         </div>
@@ -560,15 +577,20 @@ export default function App() {
           <div className="plan-panel-header">THE PLAN</div>
           <div className="plan-scroll">
             {(() => {
+              const isEmbedded = (m: ItineraryBlock) =>
+                itinerary.some(b => b.type !== 'meetup' && m.start > b.start && m.start < b.end);
+              const embeddedFor = (b: ItineraryBlock) =>
+                itinerary.filter(m => m.type === 'meetup' && m.start > b.start && m.start < b.end);
+              const visible = itinerary.filter(b => b.type !== 'meetup' || !isEmbedded(b));
               const nowIdx = nowMinutes !== null
-                ? itinerary.reduce<number>((acc, b, i) => b.start <= nowMinutes ? i : acc, -1)
+                ? visible.reduce<number>((acc, b, i) => b.start <= nowMinutes ? i : acc, -1)
                 : null;
               return (
                 <>
                   {nowIdx === -1 && <PlanNowMarker />}
-                  {itinerary.map((block, i) => (
+                  {visible.map((block, i) => (
                     <Fragment key={i}>
-                      <ItineraryItem block={block} acts={acts} />
+                      <ItineraryItem block={block} acts={acts} embeddedMeetups={embeddedFor(block)} />
                       {nowIdx === i && <PlanNowMarker />}
                     </Fragment>
                   ))}
