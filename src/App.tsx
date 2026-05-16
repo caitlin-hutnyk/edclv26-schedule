@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect, useLayoutEffect, Fragment } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { allData, STAGES, STAGE_LABELS } from './data';
 import type { Day, Act, ItineraryBlock, ItineraryOption } from './data';
 import './App.css';
@@ -397,31 +398,36 @@ function ViewSwitcher({
   onValueChange: (v: string) => void;
   options: { value: string; label: string }[];
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const pick = (clientX: number) => {
-    const el = ref.current;
-    if (!el) return;
-    const { left, width } = el.getBoundingClientRect();
-    const idx = Math.max(0, Math.min(
-      Math.floor(((clientX - left) / width) * options.length),
-      options.length - 1,
-    ));
-    onValueChange(options[idx].value);
-  };
+  const startY = useRef<number | null>(null);
+  const startIdx = useRef(0);
+  const current = options.find(o => o.value === value);
 
   return (
     <div
-      ref={ref}
-      className="view-switcher"
-      onPointerDown={e => { e.currentTarget.setPointerCapture(e.pointerId); pick(e.clientX); }}
-      onPointerMove={e => { if (e.currentTarget.hasPointerCapture(e.pointerId)) pick(e.clientX); }}
+      className="view-select-trigger"
+      onPointerDown={e => {
+        e.currentTarget.setPointerCapture(e.pointerId);
+        startY.current = e.clientY;
+        startIdx.current = options.findIndex(o => o.value === value);
+      }}
+      onPointerMove={e => {
+        if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
+        const dy = e.clientY - (startY.current ?? e.clientY);
+        const step = Math.round(dy / 36);
+        const newIdx = Math.max(0, Math.min(startIdx.current + step, options.length - 1));
+        if (options[newIdx].value !== value) onValueChange(options[newIdx].value);
+      }}
+      onPointerUp={e => {
+        const moved = Math.abs(e.clientY - (startY.current ?? e.clientY));
+        if (moved < 6) {
+          const idx = options.findIndex(o => o.value === value);
+          onValueChange(options[(idx + 1) % options.length].value);
+        }
+        startY.current = null;
+      }}
     >
-      {options.map(opt => (
-        <div key={opt.value} className={`view-switcher-seg${opt.value === value ? ' active' : ''}`}>
-          {opt.label}
-        </div>
-      ))}
+      <span>{current?.label}</span>
+      <ChevronDown size={14} strokeWidth={2.5} />
     </div>
   );
 }
