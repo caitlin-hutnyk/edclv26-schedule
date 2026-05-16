@@ -472,20 +472,13 @@ export const day1Itinerary: ItineraryBlock[] = [
 
 export const day2Itinerary: ItineraryBlock[] = [
   {
-    type: 'meander',
-    title: 'Arrive + settle in',
-    start: t(20, 0),
-    end: t(21, 0),
-  },
-  {
     type: 'flex',
-    title: 'Sub Focus or Hybrid Minds',
-    subtitle: 'Overlap 9:30–10 PM — Sub Focus at KF, Hybrid Minds at BP',
+    title: 'Hybrid Minds or Sub Focus',
     start: t(21, 0),
     end: t(22, 30),
     options: [
-      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM' },
       { actId: 'd2-bp-hybrid-minds', name: 'Hybrid Minds', stage: 'BP', time: '9:30–10:30 PM' },
+      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM' },
     ],
   },
   {
@@ -493,12 +486,6 @@ export const day2Itinerary: ItineraryBlock[] = [
     title: 'Group meet @ water fill · Gate S',
     start: t(22, 30),
     end: t(22, 35),
-  },
-  {
-    type: 'walk',
-    title: '~5 min · BP → CG',
-    start: t(22, 30),
-    end: t(22, 45),
   },
   {
     type: 'act',
@@ -509,37 +496,24 @@ export const day2Itinerary: ItineraryBlock[] = [
     end: t(24, 15),
   },
   {
-    type: 'walk',
-    title: '~5 min · CG → BP',
-    start: t(24, 15),
-    end: t(24, 20),
-  },
-  {
     type: 'act',
     actId: 'd2-bp-delta-heavy',
-    title: 'Delta Heavy (tail)',
+    title: 'Delta Heavy',
     stage: 'bassPOD',
-    start: t(24, 20),
+    start: t(24, 15),
     end: t(24, 30),
-    note: 'Only the last 10 min if Sammy goes full',
+    note: 'Last 15 min — short walk from CG',
   },
   {
-    type: 'walk',
-    title: '~15 min · BP → KF',
-    subtitle: 'Via CG, NG, QV',
+    type: 'meander',
+    title: 'Explore',
     start: t(24, 30),
-    end: t(24, 45),
-  },
-  {
-    type: 'flex',
-    title: 'KF anchor',
-    start: t(24, 45),
-    end: t(29, 30),
+    end: t(27, 1),
     options: [
       { actId: 'd2-kf-john-summit', name: 'John Summit (tail)', stage: 'KF', time: 'ends 1:42 AM' },
       { actId: 'd2-kf-subtronics', name: 'Subtronics', stage: 'KF', time: '1:47–2:57 AM' },
-      { actId: 'd2-kf-kaskade', name: 'Kaskade', stage: 'KF', time: '3:01–4:11 AM' },
-      { actId: 'd2-kf-above-beyond', name: 'Above & Beyond', stage: 'KF', time: '4:14–5:29 AM' },
+      { actId: 'd2-cm-bunt', name: 'Bunt.', stage: 'CM', time: '12:40–2:10 AM' },
+      { actId: 'd2-cm-interplanetary', name: 'Interplanetary Criminal', stage: 'CM', time: '2:10–3:30 AM' },
     ],
   },
   { type: 'fireworks', title: 'Fireworks', start: t(25, 40), end: t(25, 40) },
@@ -551,10 +525,26 @@ export const day2Itinerary: ItineraryBlock[] = [
     end: t(25, 5),
   },
   {
+    type: 'act',
+    actId: 'd2-kf-kaskade',
+    title: 'Kaskade',
+    stage: 'kineticFIELD',
+    start: t(27, 1),
+    end: t(28, 11),
+  },
+  {
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',
     start: t(27, 30),
     end: t(27, 35),
+  },
+  {
+    type: 'act',
+    actId: 'd2-kf-above-beyond',
+    title: 'Above & Beyond',
+    stage: 'kineticFIELD',
+    start: t(28, 14),
+    end: t(29, 29),
   },
 ];
 

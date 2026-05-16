@@ -518,6 +518,7 @@ export default function App() {
   const [showMap, setShowMap] = useState(false);
   const [mobileView, setMobileView] = useState<MobileView>('plan');
   const gridScrollRef = useRef<HTMLDivElement>(null);
+  const planScrollRef = useRef<HTMLDivElement>(null);
   const dayTabsRef = useRef<HTMLElement>(null);
 
   const handleDayChange = useCallback((d: Day) => {
@@ -525,6 +526,7 @@ export default function App() {
   }, []);
 
   const gridSwipe = useSwipeDay(day, handleDayChange, gridScrollRef);
+  const planSwipe = useSwipeDay(day, handleDayChange, planScrollRef);
 
   // Animate the sliding tab indicator on day change
   useLayoutEffect(() => {
@@ -613,9 +615,9 @@ export default function App() {
           />
         </div>
         <div className="divider" />
-        <div className={`plan-panel ${mobileView === 'plan' ? 'mobile-active' : ''}`}>
+        <div className={`plan-panel ${mobileView === 'plan' ? 'mobile-active' : ''}`} {...planSwipe}>
           <div className="plan-panel-header">THE PLAN</div>
-          <div className="plan-scroll">
+          <div className="plan-scroll" ref={planScrollRef}>
             {(() => {
               const EMBEDDABLE = ['meetup', 'fireworks'];
               const isEmbedded = (m: ItineraryBlock) =>
