@@ -471,6 +471,17 @@ export const day1Itinerary: ItineraryBlock[] = [
 
 export const day2Itinerary: ItineraryBlock[] = [
   {
+    type: 'meander',
+    title: 'Arrive early',
+    start: t(20, 0),
+    end: t(21, 30),
+    options: [
+      { actId: 'd2-cg-roz', name: 'RØZ', stage: 'CG', time: '8–9:15 PM' },
+      { actId: 'd2-bp-viperactive', name: 'Viperactive', stage: 'BP', time: '8:40–9:30 PM' },
+      { actId: 'd2-ng-silvie-loto', name: 'Silvie Loto', stage: 'NG', time: '8:30–10 PM' },
+    ],
+  },
+  {
     type: 'act',
     actId: 'd2-bp-hybrid-minds',
     title: 'Hybrid Minds',
@@ -513,7 +524,9 @@ export const day2Itinerary: ItineraryBlock[] = [
       { actId: 'd2-kf-john-summit', name: 'John Summit', stage: 'KF', time: '12:32–1:42 AM' },
       { actId: 'd2-cm-bunt', name: 'Bunt.', stage: 'CM', time: '12:40–2:10 AM' },
       { actId: 'd2-ng-prospa', name: 'Prospa', stage: 'NG', time: '1:30–3:30 AM' },
+      { actId: 'd2-cg-peggy-kiki', name: 'Peggy Gou B2B Ki/Ki', stage: 'CG', time: '1:45–3:15 AM' },
       { actId: 'd2-kf-subtronics', name: 'Subtronics', stage: 'KF', time: '1:47–2:57 AM' },
+      { actId: 'd2-cm-interplanetary', name: 'Interplanetary Criminal', stage: 'CM', time: '2:10–3:30 AM' },
       { actId: 'd2-bp-doctor-flux-funtcase', name: 'Doctor P B2B Flux Pavilion B2B Funtcase', stage: 'BP', time: '2:30–3:30 AM' },
     ],
   },
