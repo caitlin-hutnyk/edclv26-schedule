@@ -478,9 +478,7 @@ export const day2Itinerary: ItineraryBlock[] = [
     stage: 'bassPOD',
     start: t(21, 30),
     end: t(22, 30),
-    options: [
-      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM', note: 'alt — arrive early' },
-    ],
+    note: 'alt: Sub Focus · KF · 9–10 PM',
   },
   {
     type: 'meetup',
