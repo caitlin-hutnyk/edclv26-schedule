@@ -584,12 +584,19 @@ body {
   flex-shrink: 0;
 }
 
-/* ── Meetup row (compact pill, FYI styling) ── */
+/* ── Meetup row (dashed line, mirrors grid overlay) ── */
 .itinerary-meetup {
   display: flex;
   align-items: center;
-  padding: 2px 14px 2px 14px;
-  gap: 12px;
+  padding: 5px 14px 5px 0;
+}
+.itinerary-meetup::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed rgba(0, 212, 255, 0.5);
+  margin-left: 8px;
+  opacity: 0.85;
 }
 .it-meetup-time {
   width: 64px;
@@ -603,25 +610,22 @@ body {
   font-variant-numeric: tabular-nums;
 }
 .it-meetup-pill {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 4px 6px;
-  padding: 4px 10px 4px 8px;
-  margin-left: 32px;
-  border-radius: 14px;
-  background: rgba(0, 212, 255, 0.08);
-  border: 1px dashed rgba(0, 212, 255, 0.45);
+  flex-shrink: 0;
+  gap: 5px;
   color: var(--edc-cyan);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
+  margin-left: 4px;
+}
+.it-meetup-pill svg {
+  filter: drop-shadow(0 0 4px rgba(0, 212, 255, 0.6));
+  flex-shrink: 0;
 }
 .it-meetup-label {
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
   font-size: 9.5px;
   font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 .it-meetup-note {
@@ -1131,10 +1135,9 @@ body {
 
   .plan-now-marker { padding: 4px 10px; }
 
-  /* Meetup pill on Plan view: more compact on mobile */
-  .itinerary-meetup { padding: 1px 10px; gap: 8px; }
+  /* Meetup line on Plan view: more compact on mobile */
+  .itinerary-meetup { padding: 4px 10px 4px 0; }
   .it-meetup-time { width: 50px; padding-right: 6px; font-size: 9px; }
-  .it-meetup-pill { margin-left: 22px; padding: 3px 8px 3px 7px; gap: 5px; }
-  .it-meetup-label { font-size: 9px; letter-spacing: 1px; }
+  .it-meetup-label { font-size: 9px; letter-spacing: 0.8px; }
   .it-meetup-note { font-size: 9px; }
 }
