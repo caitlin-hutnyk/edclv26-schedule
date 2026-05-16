@@ -570,6 +570,33 @@ body {
   text-transform: uppercase;
 }
 
+/* ── Now marker in plan panel ── */
+.plan-now-marker {
+  display: flex;
+  align-items: center;
+  padding: 4px 14px;
+  gap: 8px;
+  pointer-events: none;
+}
+.plan-now-line {
+  flex: 1;
+  height: 1.5px;
+  background: var(--day-accent);
+  box-shadow: 0 0 8px var(--day-accent);
+  border-radius: 1px;
+  opacity: 0.9;
+  animation: now-pulse 2.4s ease-in-out infinite;
+}
+.plan-now-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--day-accent);
+  font-family: 'Bai Jamjuree', sans-serif;
+  text-shadow: 0 0 8px var(--day-accent);
+  flex-shrink: 0;
+}
+
 /* ── Meetup row (compact pill, FYI styling) ── */
 .itinerary-meetup {
   display: flex;
@@ -1114,6 +1141,8 @@ body {
   .act-block .act-time-label { display: none; }
   .grid-body .now-indicator { left: -24px; }
   .grid-body .meetup-line { left: -24px; }
+
+  .plan-now-marker { padding: 4px 10px; }
 
   /* Meetup pill on Plan view: more compact on mobile */
   .itinerary-meetup { padding: 1px 10px; gap: 8px; }

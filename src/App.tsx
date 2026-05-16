@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useEffect, useLayoutEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useLayoutEffect, Fragment } from 'react';
 import { allData, STAGES, STAGE_LABELS } from './data';
 import type { Day, Act, ItineraryBlock, ItineraryOption } from './data';
 import { Select } from './components/Select';
@@ -389,6 +389,16 @@ function ItineraryItem({ block, acts }: {
   );
 }
 
+function PlanNowMarker() {
+  return (
+    <div className="plan-now-marker">
+      <div className="plan-now-line" />
+      <span className="plan-now-label">NOW</span>
+      <div className="plan-now-line" />
+    </div>
+  );
+}
+
 export default function App() {
   const [day, setDay] = useState<Day>(getDefaultDay);
   const [showMap, setShowMap] = useState(false);
@@ -490,9 +500,22 @@ export default function App() {
         <div className={`plan-panel ${mobileView === 'plan' ? 'mobile-active' : ''}`}>
           <div className="plan-panel-header">THE PLAN</div>
           <div className="plan-scroll">
-            {itinerary.map((block, i) => (
-              <ItineraryItem key={i} block={block} acts={acts} />
-            ))}
+            {(() => {
+              const nowIdx = nowMinutes !== null
+                ? itinerary.reduce<number>((acc, b, i) => b.start <= nowMinutes ? i : acc, -1)
+                : null;
+              return (
+                <>
+                  {nowIdx === -1 && <PlanNowMarker />}
+                  {itinerary.map((block, i) => (
+                    <Fragment key={i}>
+                      <ItineraryItem block={block} acts={acts} />
+                      {nowIdx === i && <PlanNowMarker />}
+                    </Fragment>
+                  ))}
+                </>
+              );
+            })()}
           </div>
         </div>
         {/* Mobile: map as a 3rd inline view */}
