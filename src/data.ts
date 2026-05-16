@@ -408,7 +408,6 @@ export const day1Itinerary: ItineraryBlock[] = [
   {
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',
-    subtitle: 'Before Levity',
     start: t(22, 45),
     end: t(22, 50),
   },
@@ -478,7 +477,9 @@ export const day2Itinerary: ItineraryBlock[] = [
     stage: 'bassPOD',
     start: t(21, 30),
     end: t(22, 30),
-    note: 'alt: Sub Focus · KF · 9–10 PM',
+    options: [
+      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM' },
+    ],
   },
   {
     type: 'meetup',
@@ -520,7 +521,6 @@ export const day2Itinerary: ItineraryBlock[] = [
   {
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',
-    subtitle: 'To find lost people',
     start: t(25, 0),
     end: t(25, 5),
   },
@@ -602,7 +602,6 @@ export const day3Itinerary: ItineraryBlock[] = [
   {
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',
-    subtitle: 'To find lost people',
     start: t(25, 0),
     end: t(25, 5),
   },
