@@ -46,7 +46,7 @@ export interface Act {
   tier?: Tier;
 }
 
-export type BlockType = 'act' | 'meander' | 'walk' | 'flex' | 'subheader' | 'meetup';
+export type BlockType = 'act' | 'meander' | 'walk' | 'flex' | 'subheader' | 'meetup' | 'fireworks';
 
 export interface ItineraryOption {
   actId: string;
@@ -430,6 +430,7 @@ export const day1Itinerary: ItineraryBlock[] = [
       { actId: 'd1-bj-salute-chloe', name: 'Salute B2B Chloe Caillet', stage: 'BJ', time: '12:30–2:30 AM', note: '~15 min walk from CG' },
     ],
   },
+  { type: 'fireworks', title: 'Fireworks', start: t(25, 40), end: t(25, 40) },
   {
     type: 'flex',
     title: 'Notion or Fisher',
@@ -541,6 +542,7 @@ export const day2Itinerary: ItineraryBlock[] = [
       { actId: 'd2-kf-above-beyond', name: 'Above & Beyond', stage: 'KF', time: '4:14–5:29 AM' },
     ],
   },
+  { type: 'fireworks', title: 'Fireworks', start: t(25, 40), end: t(25, 40) },
   {
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',
@@ -606,6 +608,7 @@ export const day3Itinerary: ItineraryBlock[] = [
       { actId: 'd3-bp-aeon-mode', name: 'AEON:MODE', stage: 'BP', time: '4:30–5:30 AM', note: '~15 min walk from KF · mutually exclusive with full Armin' },
     ],
   },
+  { type: 'fireworks', title: 'Fireworks', start: t(25, 40), end: t(25, 40) },
   {
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',

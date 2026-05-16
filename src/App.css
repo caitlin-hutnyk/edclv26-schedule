@@ -680,6 +680,86 @@ body {
   white-space: nowrap;
 }
 
+/* ── Standalone fireworks row in plan panel ── */
+.itinerary-fireworks {
+  display: flex;
+  align-items: center;
+  padding: 5px 14px 5px 0;
+}
+.itinerary-fireworks::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed rgba(255, 204, 68, 0.5);
+  margin-left: 8px;
+  opacity: 0.85;
+}
+.it-fireworks-time {
+  width: 64px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-right: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #ffcc44;
+  letter-spacing: 0.3px;
+  font-variant-numeric: tabular-nums;
+}
+.it-fireworks-pill {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5px;
+  color: #ffcc44;
+  margin-left: 4px;
+}
+.it-fireworks-pill svg {
+  filter: drop-shadow(0 0 4px rgba(255, 204, 68, 0.6));
+  flex-shrink: 0;
+}
+.it-fireworks-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ── Embedded fireworks override (gold instead of cyan) ── */
+.it-embedded-meetup.it-embedded-fireworks {
+  color: #ffcc44;
+}
+.it-embedded-meetup.it-embedded-fireworks::after {
+  border-top-color: rgba(255, 204, 68, 0.4);
+}
+.it-embedded-meetup.it-embedded-fireworks svg {
+  filter: drop-shadow(0 0 3px rgba(255, 204, 68, 0.5));
+}
+
+/* ── Fireworks line on Lineup grid (horizontal dashed, gold) ── */
+.fireworks-line {
+  position: absolute;
+  left: -64px;
+  right: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 6;
+}
+.fireworks-line::after {
+  content: '';
+  flex: 1;
+  height: 0;
+  border-top: 1px dashed rgba(255, 204, 68, 0.55);
+  opacity: 0.85;
+}
+.fireworks-line svg {
+  color: #ffcc44;
+  flex-shrink: 0;
+  margin-right: 4px;
+  filter: drop-shadow(0 0 4px rgba(255, 204, 68, 0.6));
+}
+
 /* ── Meetup line on Lineup grid (horizontal dashed) ── */
 .meetup-line {
   position: absolute;
@@ -1176,6 +1256,7 @@ body {
   .act-block .act-time-label { display: none; }
   .grid-body .now-indicator { left: -24px; }
   .grid-body .meetup-line { left: -24px; }
+  .grid-body .fireworks-line { left: -24px; }
 
   .plan-now-marker { padding: 4px 10px; }
 
@@ -1184,4 +1265,9 @@ body {
   .it-meetup-time { width: 50px; padding-right: 6px; font-size: 9px; }
   .it-meetup-label { font-size: 9px; letter-spacing: 0.8px; }
   .it-meetup-note { font-size: 9px; }
+
+  /* Fireworks row on Plan view: compact on mobile */
+  .itinerary-fireworks { padding: 4px 10px 4px 0; }
+  .it-fireworks-time { width: 50px; padding-right: 6px; font-size: 9px; }
+  .it-fireworks-label { font-size: 9px; letter-spacing: 0.8px; }
 }

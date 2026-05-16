@@ -172,12 +172,13 @@ function useIsMobile() {
   return isMobile;
 }
 
-function ScheduleGrid({ acts, day, nowMinutes, scrollRef, meetups }: {
+function ScheduleGrid({ acts, day, nowMinutes, scrollRef, meetups, fireworks }: {
   acts: Act[];
   day: Day;
   nowMinutes: number | null;
   scrollRef: React.RefObject<HTMLDivElement | null>;
   meetups: ItineraryBlock[];
+  fireworks: ItineraryBlock[];
 }) {
   const isMobile = useIsMobile();
   const hourPx = isMobile ? 40 : HOUR_PX;
@@ -254,6 +255,17 @@ function ScheduleGrid({ acts, day, nowMinutes, scrollRef, meetups }: {
             </div>
           ))}
 
+          {fireworks.map((fw, i) => (
+            <div
+              key={`fireworks-${i}`}
+              className="fireworks-line"
+              style={{ top: `${((fw.start - rangeStart) / 60) * hourPx}px` }}
+              title={`${formatTime(fw.start)} · Fireworks`}
+            >
+              <FireworksIcon />
+            </div>
+          ))}
+
           {nowMinutes !== null && nowMinutes >= rangeStart && nowMinutes <= rangeEnd && (
             <div
               className="now-indicator"
@@ -310,10 +322,24 @@ const MeetupIcon = () => (
   </svg>
 );
 
-function ItineraryItem({ block, acts, embeddedMeetups = [] }: {
+const FireworksIcon = () => (
+  <svg viewBox="0 0 16 16" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+    <line x1="8" y1="1"  x2="8" y2="4.5" />
+    <line x1="8" y1="11.5" x2="8" y2="15" />
+    <line x1="1"  y1="8" x2="4.5" y2="8" />
+    <line x1="11.5" y1="8" x2="15" y2="8" />
+    <line x1="3.2" y1="3.2" x2="5.5" y2="5.5" />
+    <line x1="10.5" y1="10.5" x2="12.8" y2="12.8" />
+    <line x1="12.8" y1="3.2" x2="10.5" y2="5.5" />
+    <line x1="5.5"  y1="10.5" x2="3.2" y2="12.8" />
+    <circle cx="8" cy="8" r="1.8" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+function ItineraryItem({ block, acts, embeddedEvents = [] }: {
   block: ItineraryBlock;
   acts: Act[];
-  embeddedMeetups?: ItineraryBlock[];
+  embeddedEvents?: ItineraryBlock[];
 }) {
   const linkedAct = block.actId ? acts.find(a => a.id === block.actId) : undefined;
   const stageKey = linkedAct ? linkedAct.stage : stageKeyFromLabel(block.stage);
@@ -336,6 +362,18 @@ function ItineraryItem({ block, acts, embeddedMeetups = [] }: {
           <MeetupIcon />
           <span className="it-meetup-label">{block.title}</span>
           {block.subtitle && <span className="it-meetup-note">· {block.subtitle.toLowerCase()}</span>}
+        </div>
+      </div>
+    );
+  }
+
+  if (block.type === 'fireworks') {
+    return (
+      <div className="itinerary-fireworks" data-it-time={block.start}>
+        <div className="it-fireworks-time">{formatTime(block.start)}</div>
+        <div className="it-fireworks-pill">
+          <FireworksIcon />
+          <span className="it-fireworks-label">Fireworks</span>
         </div>
       </div>
     );
@@ -388,14 +426,14 @@ function ItineraryItem({ block, acts, embeddedMeetups = [] }: {
               })}
             </div>
           )}
-          {embeddedMeetups.length > 0 && (
+          {embeddedEvents.length > 0 && (
             <div className="it-embedded-meetups">
-              {embeddedMeetups.map((m, i) => (
-                <div key={i} className="it-embedded-meetup">
-                  <MeetupIcon />
+              {embeddedEvents.map((m, i) => (
+                <div key={i} className={`it-embedded-meetup${m.type === 'fireworks' ? ' it-embedded-fireworks' : ''}`}>
+                  {m.type === 'fireworks' ? <FireworksIcon /> : <MeetupIcon />}
                   <span className="it-embedded-meetup-time">{formatTime(m.start)}</span>
-                  <span className="it-embedded-meetup-label">{m.title}</span>
-                  {m.subtitle && <span className="it-embedded-meetup-note">· {m.subtitle.toLowerCase()}</span>}
+                  <span className="it-embedded-meetup-label">{m.type === 'fireworks' ? 'Fireworks' : m.title}</span>
+                  {m.type === 'meetup' && m.subtitle && <span className="it-embedded-meetup-note">· {m.subtitle.toLowerCase()}</span>}
                 </div>
               ))}
             </div>
@@ -506,6 +544,7 @@ export default function App() {
 
   const { acts, itinerary } = allData[day];
   const meetups = itinerary.filter(b => b.type === 'meetup');
+  const fireworks = itinerary.filter(b => b.type === 'fireworks');
 
   const [nowMinutes, setNowMinutes] = useState<number | null>(() => {
     const { dateStr, minutes } = getPacificTime();
@@ -570,6 +609,7 @@ export default function App() {
             nowMinutes={nowMinutes}
             scrollRef={gridScrollRef}
             meetups={meetups}
+            fireworks={fireworks}
           />
         </div>
         <div className="divider" />
@@ -577,11 +617,15 @@ export default function App() {
           <div className="plan-panel-header">THE PLAN</div>
           <div className="plan-scroll">
             {(() => {
+              const EMBEDDABLE = ['meetup', 'fireworks'];
               const isEmbedded = (m: ItineraryBlock) =>
-                itinerary.some(b => b.type !== 'meetup' && m.start > b.start && m.start < b.end);
+                EMBEDDABLE.includes(m.type) &&
+                itinerary.some(b => !EMBEDDABLE.includes(b.type) && m.start > b.start && m.start < b.end);
               const embeddedFor = (b: ItineraryBlock) =>
-                itinerary.filter(m => m.type === 'meetup' && m.start > b.start && m.start < b.end);
-              const visible = itinerary.filter(b => b.type !== 'meetup' || !isEmbedded(b));
+                itinerary
+                  .filter(m => EMBEDDABLE.includes(m.type) && m.start > b.start && m.start < b.end)
+                  .sort((a, bb) => a.start - bb.start);
+              const visible = itinerary.filter(b => !EMBEDDABLE.includes(b.type) || !isEmbedded(b));
               const nowIdx = nowMinutes !== null
                 ? visible.reduce<number>((acc, b, i) => b.start <= nowMinutes ? i : acc, -1)
                 : null;
@@ -590,7 +634,7 @@ export default function App() {
                   {nowIdx === -1 && <PlanNowMarker />}
                   {visible.map((block, i) => (
                     <Fragment key={i}>
-                      <ItineraryItem block={block} acts={acts} embeddedMeetups={embeddedFor(block)} />
+                      <ItineraryItem block={block} acts={acts} embeddedEvents={embeddedFor(block)} />
                       {nowIdx === i && <PlanNowMarker />}
                     </Fragment>
                   ))}
