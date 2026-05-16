@@ -95,11 +95,11 @@ export const day1Acts: Act[] = [
   { id: 'd1-cg-nico-moreno', name: 'Nico Moreno', stage: 'circuit', start: t(21, 0), end: t(22, 0) },
   { id: 'd1-cg-i-hate-models', name: 'I Hate Models', stage: 'circuit', start: t(22, 0), end: t(23, 15) },
   { id: 'd1-cg-levity', name: 'Levity', stage: 'circuit', start: t(23, 15), end: t(24, 25), tier: 'could' },
-  { id: 'd1-cg-wooli', name: 'Wooli', stage: 'circuit', start: t(24, 25), end: t(25, 35) },
+  { id: 'd1-cg-wooli', name: 'Wooli', stage: 'circuit', start: t(24, 25), end: t(25, 35), tier: 'want' },
   { id: 'd1-cg-outlaw', name: 'The Outlaw', stage: 'circuit', start: t(25, 35), end: t(26, 35) },
   { id: 'd1-cg-holy-priest', name: 'Holy Priest', stage: 'circuit', start: t(26, 35), end: t(27, 30) },
   { id: 'd1-cg-ray-volpe', name: 'Ray Volpe', stage: 'circuit', start: t(27, 30), end: t(28, 30) },
-  { id: 'd1-cg-level-up', name: 'Level Up', stage: 'circuit', start: t(28, 30), end: t(29, 30) },
+  { id: 'd1-cg-level-up', name: 'Level Up', stage: 'circuit', start: t(28, 30), end: t(29, 30), tier: 'could' },
 
   // cosmicMEADOW
   { id: 'd1-cm-max-luke', name: 'Max Dean B2B Luke Dean', stage: 'cosmic', start: t(17, 0), end: t(18, 50) },
@@ -458,6 +458,7 @@ export const day1Itinerary: ItineraryBlock[] = [
     end: t(29, 29),
     options: [
       { actId: 'd1-kf-charlotte', name: 'Charlotte De Witte', stage: 'KF', time: '4:14–5:29 AM' },
+      { actId: 'd1-cg-level-up', name: 'Level Up', stage: 'CG', time: '4:30–5:30 AM' },
     ],
   },
 ];
