@@ -472,13 +472,14 @@ export const day1Itinerary: ItineraryBlock[] = [
 
 export const day2Itinerary: ItineraryBlock[] = [
   {
-    type: 'flex',
-    title: 'Hybrid Minds or Sub Focus',
-    start: t(21, 0),
+    type: 'act',
+    actId: 'd2-bp-hybrid-minds',
+    title: 'Hybrid Minds',
+    stage: 'bassPOD',
+    start: t(21, 30),
     end: t(22, 30),
     options: [
-      { actId: 'd2-bp-hybrid-minds', name: 'Hybrid Minds', stage: 'BP', time: '9:30–10:30 PM' },
-      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM' },
+      { actId: 'd2-kf-sub-focus', name: 'Sub Focus', stage: 'KF', time: '9–10 PM', note: 'alt — arrive early' },
     ],
   },
   {
@@ -510,10 +511,12 @@ export const day2Itinerary: ItineraryBlock[] = [
     start: t(24, 30),
     end: t(27, 1),
     options: [
+      { actId: 'd2-cg-tiesto', name: 'Tiësto', stage: 'CG', time: '12:15–1:45 AM' },
       { actId: 'd2-kf-john-summit', name: 'John Summit (tail)', stage: 'KF', time: 'ends 1:42 AM' },
-      { actId: 'd2-kf-subtronics', name: 'Subtronics', stage: 'KF', time: '1:47–2:57 AM' },
       { actId: 'd2-cm-bunt', name: 'Bunt.', stage: 'CM', time: '12:40–2:10 AM' },
-      { actId: 'd2-cm-interplanetary', name: 'Interplanetary Criminal', stage: 'CM', time: '2:10–3:30 AM' },
+      { actId: 'd2-ng-prospa', name: 'Prospa', stage: 'NG', time: '1:30–3:30 AM' },
+      { actId: 'd2-kf-subtronics', name: 'Subtronics', stage: 'KF', time: '1:47–2:57 AM' },
+      { actId: 'd2-bp-doctor-flux-funtcase', name: 'Doctor P B2B Flux Pavilion B2B Funtcase', stage: 'BP', time: '2:30–3:30 AM' },
     ],
   },
   { type: 'fireworks', title: 'Fireworks', start: t(25, 40), end: t(25, 40) },
