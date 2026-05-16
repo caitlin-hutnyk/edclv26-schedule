@@ -398,36 +398,52 @@ function ViewSwitcher({
   onValueChange: (v: string) => void;
   options: { value: string; label: string }[];
 }) {
-  const startY = useRef<number | null>(null);
-  const startIdx = useRef(0);
+  const [open, setOpen] = useState(false);
+  const [highlighted, setHighlighted] = useState<string | null>(null);
   const current = options.find(o => o.value === value);
 
+  const optionAt = (x: number, y: number) =>
+    document.elementFromPoint(x, y)?.closest<HTMLElement>('[data-option]')?.dataset.option ?? null;
+
   return (
-    <div
-      className="view-select-trigger"
-      onPointerDown={e => {
-        e.currentTarget.setPointerCapture(e.pointerId);
-        startY.current = e.clientY;
-        startIdx.current = options.findIndex(o => o.value === value);
-      }}
-      onPointerMove={e => {
-        if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
-        const dy = e.clientY - (startY.current ?? e.clientY);
-        const step = Math.round(dy / 36);
-        const newIdx = Math.max(0, Math.min(startIdx.current + step, options.length - 1));
-        if (options[newIdx].value !== value) onValueChange(options[newIdx].value);
-      }}
-      onPointerUp={e => {
-        const moved = Math.abs(e.clientY - (startY.current ?? e.clientY));
-        if (moved < 6) {
-          const idx = options.findIndex(o => o.value === value);
-          onValueChange(options[(idx + 1) % options.length].value);
-        }
-        startY.current = null;
-      }}
-    >
-      <span>{current?.label}</span>
-      <ChevronDown size={14} strokeWidth={2.5} />
+    <div className="view-switcher-root">
+      <div
+        className="view-select-trigger"
+        onPointerDown={e => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          setOpen(true);
+          setHighlighted(value);
+        }}
+        onPointerMove={e => {
+          if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
+          const opt = optionAt(e.clientX, e.clientY);
+          if (opt) setHighlighted(opt);
+        }}
+        onPointerUp={e => {
+          const opt = optionAt(e.clientX, e.clientY);
+          if (opt) onValueChange(opt);
+          setOpen(false);
+          setHighlighted(null);
+        }}
+        onPointerCancel={() => { setOpen(false); setHighlighted(null); }}
+      >
+        <span>{current?.label}</span>
+        <ChevronDown size={14} strokeWidth={2.5} />
+      </div>
+
+      {open && (
+        <div className="view-select-content">
+          {options.map(opt => (
+            <div
+              key={opt.value}
+              data-option={opt.value}
+              className={`view-select-item${highlighted === opt.value ? ' highlighted' : ''}${value === opt.value ? ' checked' : ''}`}
+            >
+              {opt.label}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

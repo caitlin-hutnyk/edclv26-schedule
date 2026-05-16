@@ -409,8 +409,8 @@ export const day1Itinerary: ItineraryBlock[] = [
     type: 'meetup',
     title: 'Group meet @ water fill · Gate S',
     subtitle: 'Before Levity',
-    start: t(23, 5),
-    end: t(23, 10),
+    start: t(22, 45),
+    end: t(22, 50),
   },
   {
     type: 'act',
@@ -439,6 +439,12 @@ export const day1Itinerary: ItineraryBlock[] = [
       { actId: 'd1-cm-notion', name: 'Notion', stage: 'CM', time: '1:47–2:47 AM' },
       { actId: 'd1-kf-fisher', name: 'Fisher', stage: 'KF', time: '1:47–2:57 AM' },
     ],
+  },
+  {
+    type: 'meetup',
+    title: 'Group meet @ water fill · Gate S',
+    start: t(26, 0),
+    end: t(26, 5),
   },
   {
     type: 'flex',
