@@ -482,6 +482,12 @@ export const day2Itinerary: ItineraryBlock[] = [
     ],
   },
   {
+    type: 'meetup',
+    title: 'Group meet @ daisy fields',
+    start: t(20, 30),
+    end: t(20, 35),
+  },
+  {
     type: 'act',
     actId: 'd2-bp-hybrid-minds',
     title: 'Hybrid Minds',
@@ -494,7 +500,7 @@ export const day2Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ water fill · Gate S',
+    title: 'Group meet @ daisy fields',
     start: t(22, 30),
     end: t(22, 35),
   },
@@ -533,7 +539,7 @@ export const day2Itinerary: ItineraryBlock[] = [
   { type: 'fireworks', title: 'Fireworks', start: t(25, 40), end: t(25, 40) },
   {
     type: 'meetup',
-    title: 'Group meet @ water fill · Gate S',
+    title: 'Group meet @ daisy fields',
     start: t(25, 0),
     end: t(25, 5),
   },
@@ -547,7 +553,7 @@ export const day2Itinerary: ItineraryBlock[] = [
   },
   {
     type: 'meetup',
-    title: 'Group meet @ water fill · Gate S',
+    title: 'Group meet @ daisy fields',
     start: t(27, 30),
     end: t(27, 35),
   },
