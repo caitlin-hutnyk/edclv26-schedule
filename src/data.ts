@@ -198,11 +198,11 @@ export const day2Acts: Act[] = [
 
   // circuitGROUNDS
   { id: 'd2-cg-dj-mandy', name: 'DJ Mandy', stage: 'circuit', start: t(19, 0), end: t(20, 0) },
-  { id: 'd2-cg-roz', name: 'Roz', stage: 'circuit', start: t(20, 0), end: t(21, 15) },
+  { id: 'd2-cg-roz', name: 'Roz', stage: 'circuit', start: t(20, 0), end: t(21, 15), tier: 'could' },
   { id: 'd2-cg-kettama', name: 'Kettama', stage: 'circuit', start: t(21, 15), end: t(22, 45), tier: 'could' },
   { id: 'd2-cg-sammy-virji', name: 'Sammy Virji', stage: 'circuit', start: t(22, 45), end: t(24, 15), tier: 'want' },
   { id: 'd2-cg-tiesto', name: 'Tiësto', stage: 'circuit', start: t(24, 15), end: t(25, 45), tier: 'could' },
-  { id: 'd2-cg-peggy-kiki', name: 'Peggy Gou B2B Ki/Ki', stage: 'circuit', start: t(25, 45), end: t(27, 15) },
+  { id: 'd2-cg-peggy-kiki', name: 'Peggy Gou B2B Ki/Ki', stage: 'circuit', start: t(25, 45), end: t(27, 15), tier: 'could' },
   { id: 'd2-cg-boys-noize', name: 'Boys Noize', stage: 'circuit', start: t(27, 15), end: t(28, 30) },
   { id: 'd2-cg-lilly-palmer', name: 'Lilly Palmer', stage: 'circuit', start: t(28, 30), end: t(29, 30) },
 
@@ -213,14 +213,14 @@ export const day2Acts: Act[] = [
   { id: 'd2-cm-vtss', name: 'VTSS', stage: 'cosmic', start: t(22, 15), end: t(23, 30) },
   { id: 'd2-cm-prodigy', name: 'The Prodigy', stage: 'cosmic', start: t(23, 35), end: t(24, 35) },
   { id: 'd2-cm-bunt', name: 'Bunt.', stage: 'cosmic', start: t(24, 40), end: t(26, 10), tier: 'could' },
-  { id: 'd2-cm-interplanetary', name: 'Interplanetary Criminal', stage: 'cosmic', start: t(26, 10), end: t(27, 30) },
+  { id: 'd2-cm-interplanetary', name: 'Interplanetary Criminal', stage: 'cosmic', start: t(26, 10), end: t(27, 30), tier: 'could' },
   { id: 'd2-cm-malugi', name: 'Malugi', stage: 'cosmic', start: t(27, 30), end: t(28, 30) },
   { id: 'd2-cm-gigola-mcrt', name: 'DJ Gigola B2B MCR-T', stage: 'cosmic', start: t(28, 30), end: t(29, 30) },
 
   // bassPOD
   { id: 'd2-bp-fallen-dino', name: 'Fallen With MC Dino', stage: 'bass', start: t(19, 0), end: t(19, 50) },
   { id: 'd2-bp-avello-dennett', name: 'Avello B2B Dennett', stage: 'bass', start: t(19, 50), end: t(20, 40) },
-  { id: 'd2-bp-viperactive', name: 'Viperactive', stage: 'bass', start: t(20, 40), end: t(21, 30) },
+  { id: 'd2-bp-viperactive', name: 'Viperactive', stage: 'bass', start: t(20, 40), end: t(21, 30), tier: 'could' },
   { id: 'd2-bp-hybrid-minds', name: 'Hybrid Minds', stage: 'bass', start: t(21, 30), end: t(22, 30), tier: 'want' },
   { id: 'd2-bp-ydg', name: 'YDG', stage: 'bass', start: t(22, 30), end: t(23, 30) },
   { id: 'd2-bp-delta-heavy', name: 'Delta Heavy', stage: 'bass', start: t(23, 30), end: t(24, 30), tier: 'want' },
@@ -232,7 +232,7 @@ export const day2Acts: Act[] = [
 
   // neonGARDEN
   { id: 'd2-ng-mink', name: 'Mink', stage: 'neon', start: t(19, 0), end: t(20, 30) },
-  { id: 'd2-ng-silvie-loto', name: 'Silvie Loto', stage: 'neon', start: t(20, 30), end: t(22, 0) },
+  { id: 'd2-ng-silvie-loto', name: 'Silvie Loto', stage: 'neon', start: t(20, 30), end: t(22, 0), tier: 'could' },
   { id: 'd2-ng-ahmed-spins', name: 'Ahmed Spins', stage: 'neon', start: t(22, 0), end: t(23, 30) },
   { id: 'd2-ng-luciano', name: 'Luciano', stage: 'neon', start: t(23, 30), end: t(25, 30) },
   { id: 'd2-ng-prospa', name: 'Prospa', stage: 'neon', start: t(25, 30), end: t(27, 30), tier: 'could' },
