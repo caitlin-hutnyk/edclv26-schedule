@@ -404,41 +404,48 @@ function ItineraryItem({ block, acts, embeddedEvents = [] }: {
           </div>
           {block.subtitle && <div className="it-subtitle">{block.subtitle}</div>}
           {block.note && <div className="it-note">{block.note}</div>}
-          {block.options && block.options.length > 0 && (
-            <div className="it-options">
-              {block.options.map((opt: ItineraryOption) => {
-                const neutralOptions = block.type === 'meander' || block.type === 'act';
-                const optStageKey = neutralOptions ? null : stageKeyFromLabel(opt.stage);
-                const optActFull = acts.find(a => a.id === opt.actId);
-                const optTier = neutralOptions ? undefined : optActFull?.tier;
-                return (
-                  <div
-                    key={opt.actId}
-                    className={`it-option ${optStageKey ? `stage-${optStageKey}` : ''} ${optTier ? `tier-${optTier}` : ''}`}
-                    data-it-time={optActFull?.start}
-                  >
-                    <div className="it-option-main">
-                      <span className="it-option-name">{opt.name}</span>
-                      <span className="it-option-meta">{opt.stage} · {opt.time}</span>
+          {(() => {
+            if (!block.options?.length && !embeddedEvents.length) return null;
+            const neutralOptions = block.type === 'meander' || block.type === 'act';
+            type OptionRow = { kind: 'option'; opt: ItineraryOption; actData?: Act; sortTime: number };
+            type EventRow  = { kind: 'event';  ev: ItineraryBlock; sortTime: number };
+            const rows: (OptionRow | EventRow)[] = [
+              ...(block.options ?? []).map(opt => {
+                const actData = acts.find(a => a.id === opt.actId);
+                return { kind: 'option' as const, opt, actData, sortTime: actData?.start ?? Infinity };
+              }),
+              ...embeddedEvents.map(ev => ({ kind: 'event' as const, ev, sortTime: ev.start })),
+            ].sort((a, b) => a.sortTime - b.sortTime);
+            return (
+              <div className="it-options">
+                {rows.map((row, i) => {
+                  if (row.kind === 'option') {
+                    const { opt, actData } = row;
+                    const optStageKey = neutralOptions ? null : stageKeyFromLabel(opt.stage);
+                    const optTier = neutralOptions ? undefined : actData?.tier;
+                    return (
+                      <div key={`opt-${opt.actId}`} className={`it-option ${optStageKey ? `stage-${optStageKey}` : ''} ${optTier ? `tier-${optTier}` : ''}`}>
+                        <div className="it-option-main">
+                          <span className="it-option-name">{opt.name}</span>
+                          <span className="it-option-meta">{opt.stage} · {opt.time}</span>
+                        </div>
+                        {opt.note && <div className="it-option-note">{opt.note}</div>}
+                      </div>
+                    );
+                  }
+                  const { ev } = row;
+                  return (
+                    <div key={`ev-${i}`} className={`it-embedded-meetup${ev.type === 'fireworks' ? ' it-embedded-fireworks' : ''}`}>
+                      {ev.type === 'fireworks' ? <FireworksIcon /> : <MeetupIcon />}
+                      <span className="it-embedded-meetup-time">{formatTime(ev.start)}</span>
+                      <span className="it-embedded-meetup-label">{ev.type === 'fireworks' ? 'Fireworks' : ev.title}</span>
+                      {ev.type === 'meetup' && ev.subtitle && <span className="it-embedded-meetup-note">· {ev.subtitle.toLowerCase()}</span>}
                     </div>
-                    {opt.note && <div className="it-option-note">{opt.note}</div>}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-          {embeddedEvents.length > 0 && (
-            <div className="it-embedded-meetups">
-              {embeddedEvents.map((m, i) => (
-                <div key={i} className={`it-embedded-meetup${m.type === 'fireworks' ? ' it-embedded-fireworks' : ''}`}>
-                  {m.type === 'fireworks' ? <FireworksIcon /> : <MeetupIcon />}
-                  <span className="it-embedded-meetup-time">{formatTime(m.start)}</span>
-                  <span className="it-embedded-meetup-label">{m.type === 'fireworks' ? 'Fireworks' : m.title}</span>
-                  {m.type === 'meetup' && m.subtitle && <span className="it-embedded-meetup-note">· {m.subtitle.toLowerCase()}</span>}
-                </div>
-              ))}
-            </div>
-          )}
+                  );
+                })}
+              </div>
+            );
+          })()}
         </div>
       </div>
     </div>
