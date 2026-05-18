@@ -591,7 +591,7 @@ export const day3Itinerary: ItineraryBlock[] = [
     actId: 'd3-cm-dabin',
     title: 'Dabin',
     stage: 'cosmicMEADOW',
-    start: t(23, 30),
+    start: t(23, 0),
     end: t(24, 5),
   },
   {
